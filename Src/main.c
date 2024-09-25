@@ -61,28 +61,18 @@ void SystemClock_Config(void);
   * @retval int
   */
 void delay(void){
-	for(u8 i = 0 ;i<1500;i++);
+	for(volatile u32 i = 0 ; i<18000;i++);
 }
 int main(void)
 {
-	MCAL_RCC_voidInitSysClk();
-	MCAL_RCC_voidEnablePeripheral(MCAL_RCC_AHBENR,GPIO_PORTA);
-	MCAL_RCC_voidEnablePeripheral(MCAL_RCC_AHBENR,GPIO_PORTB);
-  /* USER CODE BEGIN 1 */
 
-  /* USER CODE END 1 */
-
-  /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
   HAL_Init();
 
-    MCAL_GPIO_void_SetPinMode(GPIOA,GPIO_PIN0,GPIO_INPUT_PULL_UP_DOWN_MODE);
-    MCAL_GPIO_void_SetPinMode(GPIOB,GPIO_PIN1,GPIO_OUTPUT_PUSH_PULL_50MHZ_MODE);
-    MCAL_GPIO_void_SetPinMode(GPIOB,GPIO_PIN2,GPIO_OUTPUT_PUSH_PULL_50MHZ_MODE);
-    MCAL_GPIO_void_SetPinMode(GPIOB,GPIO_PIN3,GPIO_OUTPUT_PUSH_PULL_50MHZ_MODE);
-    MCAL_GPIO_void_SetPinMode(GPIOB,GPIO_PIN4,GPIO_OUTPUT_PUSH_PULL_50MHZ_MODE);
+  /* USER CODE BEGIN Init */
 
+  /* USER CODE END Init */
 
   /* Configure the system clock */
   SystemClock_Config();
@@ -98,35 +88,39 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+  	MCAL_RCC_voidInitSysClk();
+  	MCAL_RCC_voidEnablePeripheral(RCC_APB2,RCC_APB2ENR_IOPAEN);
+  	MCAL_RCC_voidEnablePeripheral(RCC_APB2,RCC_APB2ENR_IOPBEN);
+  	MCAL_GPIO_voidSetPinMode(GPIOA,GPIO_PIN0,GPIO_INPUT_PULL_UP_DOWN);
+  	MCAL_GPIO_voidSetPinMode(GPIOB,GPIO_PIN0,GPIO_OUTPUT_PUSH_PULL_10MHZ);
+  	MCAL_GPIO_voidSetPinMode(GPIOB,GPIO_PIN1,GPIO_OUTPUT_PUSH_PULL_10MHZ);
+  	MCAL_GPIO_voidSetPinMode(GPIOB,GPIO_PIN2,GPIO_OUTPUT_PUSH_PULL_10MHZ);
+  	MCAL_GPIO_voidSetPinMode(GPIOB,GPIO_PIN3,GPIO_OUTPUT_PUSH_PULL_10MHZ);
   while (1)
   {
-
-
-	  	  if(MCAL_GPIO_u8GetPinValue(GPIOA,GPIO_PIN0) == 1){
-	  		  	  MCAL_GPIO_void_SetPinValue(GPIOB,GPIO_PIN1,GPIO_HIGH);
-	  	  	  	  delay();
-	  	  	  	  MCAL_GPIO_void_SetPinValue(GPIOB,GPIO_PIN2,GPIO_HIGH);
-	  	  	  	  delay();
-	  	  	  	  MCAL_GPIO_void_SetPinValue(GPIOB,GPIO_PIN3,GPIO_HIGH);
-	  	  	  	  delay();
-	  	  	  	  MCAL_GPIO_void_SetPinValue(GPIOB,GPIO_PIN4,GPIO_HIGH);
-	  	  	  	  delay();
-	  	  }
-	  	  else{
-	  		      MCAL_GPIO_void_SetPinValue(GPIOB,GPIO_PIN1,GPIO_LOW);
-	  		  	  delay();
-	  		  	  MCAL_GPIO_void_SetPinValue(GPIOB,GPIO_PIN2,GPIO_LOW);
-	  		  	  delay();
-	  		  	  MCAL_GPIO_void_SetPinValue(GPIOB,GPIO_PIN3,GPIO_LOW);
-	  		  	  delay();
-	  		  	  MCAL_GPIO_void_SetPinValue(GPIOB,GPIO_PIN4,GPIO_LOW);
-	  		  	  delay();
-	  	  }
-
-
-  }
+	  u8 Read_value = MCAL_GPIO_u8GetPinValue(GPIOA,GPIO_PIN0);
+	  if( Read_value == 1){
+	  MCAL_GPIO_voidSetPinValue(GPIOB,GPIO_PIN0,GPIO_HIGH);
+	  delay();
+	  MCAL_GPIO_voidSetPinValue(GPIOB,GPIO_PIN1,GPIO_HIGH);
+	  delay();
+	  MCAL_GPIO_voidSetPinValue(GPIOB,GPIO_PIN2,GPIO_HIGH);
+	  delay();
+	  MCAL_GPIO_voidSetPinValue(GPIOB,GPIO_PIN3,GPIO_HIGH);
+	  delay();
+	  }
+	  else{
+	  MCAL_GPIO_voidSetPinValue(GPIOB,GPIO_PIN0,GPIO_LOW);
+	  delay();
+	  MCAL_GPIO_voidSetPinValue(GPIOB,GPIO_PIN1,GPIO_LOW);
+	  delay();
+	  MCAL_GPIO_voidSetPinValue(GPIOB,GPIO_PIN2,GPIO_LOW);
+	  delay();
+	  MCAL_GPIO_voidSetPinValue(GPIOB,GPIO_PIN3,GPIO_LOW);
+	  delay();
+	  }
   /* USER CODE END 3 */
-
+}
 }
 
 /**
