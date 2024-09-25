@@ -22,25 +22,24 @@
 #ifndef __MAIN_H
 #define __MAIN_H
 
-#include "STD_TYPES.h"
-#include "BIT_math.h"
-#include "RCC_interface.h"
-#include "RCC_config.h"
-#include "RCC_private.h"
-#include "GPIO_Interface.h"
-#include "GPIO_Private.h"
-#include "GPIO_Config.h"
-#include "NVIC_interface.h"
-#include "NVIC_config.h"
-#include "NVIC_private.h"
-
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f1xx_hal.h"
 
+#include "STD_TYPES.h"
+#include "BIT_math.h"
+
+#include "RCC_interface.h"
+#include "GPIO_Interface.h"
+
+
+
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+void delay(void);
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
